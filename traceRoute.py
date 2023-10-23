@@ -9,6 +9,8 @@ def traceRoute(direccionIpDst):
     timeRcv = 0
     ttl = 1
     flag = True
+
+    direccionIpDst = socket.gethostbyname(direccionIpDst)
     while flag:
         packet = IP(dst= direccionIpDst, ttl = ttl)/ICMP(type=8, code=0)
         timeSnd = time.time()
@@ -21,7 +23,7 @@ def traceRoute(direccionIpDst):
             print("destino alcanzado en " + str(ttl) + " saltos y " + str(timeRcv - timeSnd) + " segundos")
             flag = False
         else:
-            print(ttl)
+            #print(ttl)
             print(resp.src)
             ttl += 1
 
