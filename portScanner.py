@@ -2,7 +2,7 @@ from scapy.all import *
 import sys
 
 
-results = "resultsPortScanner.txt"
+results = "portScanner_"
 
 def sendPayload(ipDst, port):
     # agrego el payload al paquete
@@ -23,8 +23,8 @@ def portScanner(ipDst, version):
     abiertos = 0
     puertosAbiertos = []
     port = 1
-    with open(results, 'w') as file:
-        file.write("Resumen del escaneo de puertos del ip: " + ipDst + "\n")
+    with open(results + str(ipDst) + ".csv", 'w') as file:
+        file.write("puerto,estado\n")
         while port <= 1000:
             packet = IP(dst= ipDst)/TCP(flags="S", dport = port)
             resp = sr1(packet, timeout = 0.1)
@@ -34,20 +34,20 @@ def portScanner(ipDst, version):
                         ## envio un segundo mensaje con payload y chequeo si me lo ackea
                         if sendPayload(ipDst, port):
                             abiertos += 1
-                            file.write("puerto: " + str(port) + " (abierto)\n")
+                            file.write(str(port) + ",(abierto)\n")
                         else:
-                            file.write("puerto: " + str(port) + " (cerrado)\n")  
+                            file.write(str(port) + ",(cerrado)\n")  
                     elif version == "-h":
                         abiertos += 1
-                        file.write("puerto: " + str(port) + " (abierto)\n")
+                        file.write(str(port) + ",(abierto)\n")
                 elif resp[TCP].flags == "RA":
-                    file.write("puerto: " + str(port) + " (cerrado)\n")
+                    file.write(str(port) + ",(cerrado)\n")
                 else:
-                    file.write("puerto: " + str(port) + " (raro)\n")
-                    print("port: "+ str(port) +"respondio pero no sabemos que")
+                    file.write(str(port) + ",(raro)\n")
+                    print(str(port) +"respondio pero no sabemos que")
             else: 
                 filtrados += 1
-                file.write("puerto: " + str(port) + " (filtrado)\n")
+                file.write(str(port) + ",(filtrado)\n")
             port += 1
         print("porcentaje puertos abiertos: " + str((abiertos/1000)*100) + " %")
         print("porcentaje puertos filtrados: " + str((filtrados/1000)*100) + " %")

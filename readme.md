@@ -6,6 +6,8 @@ En este proyecto, he implementado dos herramientas: Traceroute y un Port Scanner
 ## Traceroute
 
 Traceroute es una herramienta que permite mapear la ruta entre un host origen y un host remoto, mostrando el tiempo de ida y vuelta (RTT) de los paquetes a lo largo de la ruta.
+Esta version de Traceroute utiliza ICMP para enviar paquetes y obtener las direcciones IP de los hosts intermedios.
+Se crea un csv con ttl,ip,RTT para conocer (nro de salto, ip del router correspondiente, tiempo de respuesta)
 
 ### Implementación de Traceroute
 

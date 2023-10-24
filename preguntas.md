@@ -9,3 +9,6 @@ PortScanner:
 1) dejamos -f o f?
 2) se tiene que eliminar results.txt?
 3) el segundo mensaje tiene un http? o que va en el payload? toma todos como cerrados si no hay nada en el payload
+
+Experimentacion:
+1) por que no se demora de manera incremental en el traceroute, con cada salto
