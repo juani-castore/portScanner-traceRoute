@@ -11,6 +11,7 @@ def traceRoute(direccionIpDst):
     flag = True
     while flag:
         packet = IP(dst= direccionIpDst, ttl = ttl)/ICMP(type=8, code=0)
+        # time agregado para calcular el tiempo de respuesta
         timeSnd = time.time()
         resp = sr1(packet, timeout = 10)
         timeRcv = time.time()

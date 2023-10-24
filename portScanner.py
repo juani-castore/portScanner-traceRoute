@@ -1,6 +1,7 @@
 from scapy.all import *
 import sys
 
+
 results = "resultsPortScanner.txt"
 
 def sendPayload(ipDst, port):
