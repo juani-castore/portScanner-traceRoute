@@ -18,6 +18,46 @@ def sendPayload(ipDst, port):
 
 
 
+
+
+
+from scapy.all import *
+import sys
+
+results = "portScanner_"
+
+def sendPayload(ipDst, port):
+    # agrego el payload al paquete
+    packet = IP(dst= ipDst)/TCP(flags="A", dport = port)/Raw(load="holaMundo")
+    resp = sr1(packet, timeout = 0.1)
+    if resp:
+        if resp[TCP].flags == "A":
+            return True
+        else:
+            return False
+    else:
+        return False
+
+def scanPort(ipDst, port, version):
+    packet = IP(dst= ipDst)/TCP(flags="S", dport = port)
+    resp = sr1(packet, timeout = 0.1)
+    if resp:
+        if resp[TCP].flags == "SA":
+            if version == "-f":
+                ## envio un segundo mensaje con payload y chequeo si me lo ackea
+                if sendPayload(ipDst, port):
+                    return (port, "(abierto)")
+                else:
+                    return (port, "(cerrado)")  
+            elif version == "-h":
+                return (port, "(abierto)")
+        elif resp[TCP].flags == "RA":
+            return (port, "(cerrado)")
+        else:
+            return (port, "(raro)")
+    else: 
+        return (port, "(filtrado)")
+
 def portScanner(ipDst, version):
     filtrados = 0
     abiertos = 0
@@ -26,28 +66,12 @@ def portScanner(ipDst, version):
     with open(results + str(ipDst) + ".csv", 'w') as file:
         file.write("puerto,estado\n")
         while port <= 1000:
-            packet = IP(dst= ipDst)/TCP(flags="S", dport = port)
-            resp = sr1(packet, timeout = 0.1)
-            if resp:
-                if resp[TCP].flags == "SA":
-                    if version == "-f":
-                        ## envio un segundo mensaje con payload y chequeo si me lo ackea
-                        if sendPayload(ipDst, port):
-                            abiertos += 1
-                            file.write(str(port) + ",(abierto)\n")
-                        else:
-                            file.write(str(port) + ",(cerrado)\n")  
-                    elif version == "-h":
-                        abiertos += 1
-                        file.write(str(port) + ",(abierto)\n")
-                elif resp[TCP].flags == "RA":
-                    file.write(str(port) + ",(cerrado)\n")
-                else:
-                    file.write(str(port) + ",(raro)\n")
-                    print(str(port) +"respondio pero no sabemos que")
-            else: 
+            portResult = scanPort(ipDst, port, version)
+            file.write(str(portResult[0]) + "," + portResult[1] + "\n")
+            if portResult[1] == "(abierto)":
+                abiertos += 1
+            elif portResult[1] == "(filtrado)":
                 filtrados += 1
-                file.write(str(port) + ",(filtrado)\n")
             port += 1
         print("porcentaje puertos abiertos: " + str((abiertos/1000)*100) + " %")
         print("porcentaje puertos filtrados: " + str((filtrados/1000)*100) + " %")

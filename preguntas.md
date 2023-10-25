@@ -12,3 +12,6 @@ PortScanner:
 
 Experimentacion:
 1) por que no se demora de manera incremental en el traceroute, con cada salto
+
+2) esta bien lo de los csv?
+
