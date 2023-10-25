@@ -15,3 +15,5 @@ Experimentacion:
 
 2) esta bien lo de los csv?
 
+3)  que tipo de grafico hacemos con el port scanner?
+
