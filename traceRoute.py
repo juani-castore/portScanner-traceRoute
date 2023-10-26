@@ -3,6 +3,27 @@ import sys
 import time
 
 
+# calculador de promedios
+def calculate_mean(filename):
+    mean = 0
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.split(",")
+            if line[1] != "*":
+                mean += 1    
+        mean = (mean/len(lines))*100            
+    
+    with open("porcentajesRouters.csv", 'a') as file:
+        file.write(filename + "," +str(mean)+ "\n")
+        print("promedio: " + str(mean))
+    
+
+
+
+
+
+
 ## FUNCIONES ## definimos el traceRoute
 def traceRoute(direccionIpDst):
     results = "traceRoute" + direccionIpDst + ".csv"
@@ -22,7 +43,7 @@ def traceRoute(direccionIpDst):
             packet = IP(dst= direccionIpDst, ttl = ttl)/ICMP(type=8, code=0)
             # time agregado para calcular el tiempo de RTT
             timeSnd = time.time()
-            resp = sr1(packet, timeout = 100)
+            resp = sr1(packet, timeout = 1)
             timeRcv = time.time()
         
             ip = "*"
@@ -42,6 +63,9 @@ def traceRoute(direccionIpDst):
                 #print(ttl)
                 print(resp.src)
                 ttl += 1
+    calculate_mean(results)
+
+
 
 
 ## MAIN ##
