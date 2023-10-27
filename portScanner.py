@@ -6,9 +6,9 @@ import sys
 
 results = "portScanner_"
 
-def sendPayload(ipDst, port):
+def sendPayload(ipDst, port, ackRes):
     # agrego el payload al paquete
-    packet = IP(dst= ipDst)/TCP(flags="A", dport = port)/Raw(load="holaMundo")
+    packet = IP(dst= ipDst)/TCP(flags="A", sport = 8080 , dport = port, seq=1, ack=ackRes+1 )/Raw(load="holaMundo")
     resp = sr1(packet, timeout = 0.1)
     if resp:
         if resp[TCP].flags == "A":
@@ -20,13 +20,14 @@ def sendPayload(ipDst, port):
 
 
 def scanPort(ipDst, port, version):
-    packet = IP(dst= ipDst)/TCP(flags="S", dport = port)
+    packet = IP(dst= ipDst)/TCP(flags="S", sport = 8080, dport = port)
     resp = sr1(packet, timeout = 0.1)
     if resp:
         if resp[TCP].flags == "SA":
             if version == "-f":
                 ## envio un segundo mensaje con payload y chequeo si me lo ackea
-                if sendPayload(ipDst, port):
+                ackRes = resp[TCP].seq
+                if sendPayload(ipDst, port, ackRes):
                     return (port, "(abierto)")
                 else:
                     return (port, "(cerrado)")  
