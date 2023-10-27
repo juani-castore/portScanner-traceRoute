@@ -6,16 +6,20 @@ import time
 # calculador de promedios
 def calculate_mean(filename):
     mean = 0
-    with open(filename, 'r') as f:
+    with open("traceroutes_obs/" + filename, 'r') as f:
         lines = f.readlines()
         for line in lines:
             line = line.split(",")
+            # incrementamos 1 por cada router que si responde
             if line[1] != "*":
                 mean += 1    
+        # calculamos el promedio de routers que nos contestaron en el camino
         mean = (mean/len(lines))*100            
     
     with open("porcentajesRouters.csv", 'a') as file:
-        file.write(filename + "," +str(mean)+ "\n")
+        # aca recorto el nombre del archivo
+        # asi solo se apendea la url
+        file.write(filename[10:len(filename)-4] + "," +str(mean)+ "\n")
         print("promedio: " + str(mean))
     
 
@@ -36,7 +40,7 @@ def traceRoute(direccionIpDst):
     direccionIpDst = socket.gethostbyname(direccionIpDst)
 
 
-    with open(results, 'w') as file:
+    with open("traceroutes_obs/" + results, 'w') as file:
         # columnas del csv
         file.write("ttl,ip,RTT\n")
         while flag:

@@ -53,8 +53,8 @@ def portScanner(ipDst, version):
             elif portResult[1] == "(filtrado)":
                 filtrados += 1
             port += 1
-        #print("porcentaje puertos abiertos: " + str((abiertos/1000)*100) + " %")
-        #print("porcentaje puertos filtrados: " + str((filtrados/1000)*100) + " %")
+        print("porcentaje puertos abiertos: " + str((abiertos/1000)*100) + " %")
+        print("porcentaje puertos filtrados: " + str((filtrados/1000)*100) + " %")
         
         ### DESCOMENTAR PARA GENERAR EL GRAFICO
         ## NO SUELE DAR MUCHA INFORMACION
