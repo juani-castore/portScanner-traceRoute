@@ -1,6 +1,6 @@
 from scapy.all import *
 import sys
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 
@@ -56,6 +56,11 @@ def portScanner(ipDst, version):
         print("porcentaje puertos abiertos: " + str((abiertos/1000)*100) + " %")
         print("porcentaje puertos filtrados: " + str((filtrados/1000)*100) + " %")
         
+    with open("porcentajesPuertos.csv", 'a') as file:
+        # aca recorto el nombre del archivo
+        # asi solo se apendea la url
+        file.write(ipDst +","+ str((abiertos/1000)*100) +","+ str((filtrados/1000)*100) + str( (1000 - abiertos - filtrados)/1000 * 100))
+
         ### DESCOMENTAR PARA GENERAR EL GRAFICO
         ## NO SUELE DAR MUCHA INFORMACION
         #plt.pie([abiertos/1000, filtrados/1000, (1000 - abiertos - filtrados)/1000],explode=(0.1, 0.1, 0.1), startangle=180, autopct='%1.0f%%',labeldistance=3.0, colors=[ '#87CEEB','#FFC0CB', '#98FB98'])
@@ -63,6 +68,7 @@ def portScanner(ipDst, version):
         #plt.legend(["abiertos", "filtrados","cerrados"], title='Estados', loc='lower center', bbox_to_anchor=(1, 0.5))
         #plt.axis('equal')
         #plt.savefig(results + str(ipDst) + ".png")
+
 
 
 # MAIN
