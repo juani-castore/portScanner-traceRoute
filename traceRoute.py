@@ -12,6 +12,7 @@ def calculate_mean(filename):
     meanTiempos = 0
     with open("traceroutes_obs/" + filename, 'r') as f:
         lines = f.readlines()
+        # saco el header
         lines.pop(0)
         for line in lines:
             line = line.split(",")
@@ -21,6 +22,7 @@ def calculate_mean(filename):
                 mean += 1    
         # calculamos el promedio de routers que nos contestaron en el camino
         mean = (mean/len(lines))*100 
+        # calculamos el promedio de los tiempos de RTT de todos los hops
         meanTiempos = meanTiempos/len(lines)           
     
     with open("porcentajesRouters.csv", 'a') as file:
@@ -41,6 +43,7 @@ def traceRoute(direccionIpDst):
     timeSnd = 0
     timeRcv = 0
     ttl = 1
+    # el flag indica cuando llegamos a destino
     flag = True
     
     # obtengo la direccion ip de destino
@@ -89,11 +92,10 @@ if len(sys.argv) != 2:
 direccionTest = sys.argv[1]
 
 # ejecuto el traceRoute 1 vez
-traceRoute(direccionTest)
-
+#traceRoute(direccionTest)
 
 # ejecuto el traceRoute 30 veces
-#i = 0
-#while i < 30:
-#    traceRoute(direccionTest)
-#    i += 1
+i = 0
+while i < 30:
+    traceRoute(direccionTest)
+    i += 1

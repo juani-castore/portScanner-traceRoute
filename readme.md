@@ -28,4 +28,12 @@ Implementé un Port Scanner que realiza un escaneo de los puertos menores a 1000
 
 También extendí el Port Scanner para considerar un segundo parámetro que controla el tipo de escaneo. "-h" para el escaneo básico (SYN-ACK) y "-f" para un escaneo que verifica una conexión TCP completa.
 
+### Port Scanner Extendido con Threads
+
+En esta versión del Port Scanner, utilicé threads para realizar el escaneo de los puertos. Cada thread se encarga de escanear un puerto y se guardan los resultados en un archivo portScanner_direccionURL.csv indicando el puerto y el estado (abierto, cerrado, filtrado o raro).
+
+
+### Graficos
+
+implemente un script en python "graficador.py" que genera los graficos de los archivos .csv generados por traceroute y portScanner, cabe destacar que este script utiliza la libreria matplotlib, por lo que es necesario tenerla instalada para poder ejecutarlo asi como tambien se puede modificar el script para que genere los graficos de los archivos .csv que se deseen.
 
