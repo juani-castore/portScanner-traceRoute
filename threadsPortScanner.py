@@ -1,6 +1,5 @@
 from scapy.all import *
 import sys
-import matplotlib.pyplot as plt
 
 respuestas = []
 srcPort = 8080

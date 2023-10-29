@@ -24,7 +24,7 @@ def sendPayload(ipDst, port, ackRes):
 # funcion para escanear un puerto
 def scanPort(ipDst, port, version):
     # envio un paquete con el flag SYN
-    packet = IP(dst= ipDst)/TCP(flags="S", sport = 8080, seq=1, dport = port)
+    packet = IP(dst= ipDst)/TCP(flags="S", sport = 8080,seq = 0 , dport = port)
     resp = sr1(packet, timeout = 0.1)
     if resp:
         # si recibo un paquete con el flag SYN/ACK
@@ -55,8 +55,14 @@ def portScanner(ipDst, version):
     filtrados = 0
     abiertos = 0
     port = 1
+    # Define la ruta de la carpeta en la que deseas guardar el archivo
+    carpeta = "puertos_obs" + version
+    # Nombre del archivo
+    nombre_archivo = str(ipDst) + ".csv"
+    # Une la carpeta y el nombre del archivo para obtener la ruta completa
+    ruta_completa = os.path.join(carpeta, nombre_archivo)
     # abro el archivo para escribir los resultados de todos los puertos
-    with open(results + str(ipDst) + ".csv", 'w') as file:
+    with open(ruta_completa, 'w') as file:
         # columnas del csv
         file.write("puerto,estado\n")
         while port <= 1000:
@@ -77,7 +83,7 @@ def portScanner(ipDst, version):
     with open("porcentajesPuertos.csv", 'a') as file:
         # aca recorto el nombre del archivo
         # asi solo se appendea la url
-        file.write(ipDst +","+ str((abiertos/1000)*100) +","+ str((filtrados/1000)*100) + str( (1000 - abiertos - filtrados)/1000 * 100))
+        file.write(ipDst + "," + version +","+ str((abiertos/1000)*100) +","+ str((filtrados/1000)*100)+ "," + str( (1000 - abiertos - filtrados)/1000 * 100) + "\n")
 
         ### DESCOMENTAR PARA GENERAR EL GRAFICO
         ## NO SUELE DAR MUCHA INFORMACION

@@ -1,1 +1,16 @@
-URL, abiertos, filtrados, cerrados
+URL,version , abiertos, filtrados, cerrados
+google.com,-h,0.2,99.8,0.0
+google.com,-f,0.2,99.8,0.0
+youtube.com,-f,0.2,99.8,0.0
+harvard.edu,-f,0.2,99.8,0.0
+harvard.edu,-h,0.2,99.8,0.0
+du.ac.in,-h,0.2,99.8,0.0
+du.ac.in,-f,0.0,99.8,0.2
+unimelb.edu.au,-h,99.5,0.5,0.0
+unimelb.edu.au,-f,99.4,0.6,0.0
+smtp.gmail.com,-h,0.5,99.5,0.0
+smtp.gmail.com,-f,0.4,99.5,0.1
+outlook.office365.com,-h,0.8,99.2,0.0
+outlook.office365.com,-f,0.0,99.2,0.8
+smtp.mail.yahoo.com,-h,0.0,100.0,0.0
+smtp.mail.yahoo.com,-f,0.0,100.0,0.0
