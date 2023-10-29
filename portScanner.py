@@ -8,7 +8,7 @@ results = "portScanner_"
 
 def sendPayload(ipDst, port, ackRes):
     # agrego el payload al paquete
-    packet = IP(dst= ipDst)/TCP(flags="A", sport = 8080 , dport = port, seq=1, ack=ackRes+1 )/Raw(load="holaMundo")
+    packet = IP(dst= ipDst)/TCP(flags="A", sport = 8080 , dport = port, ack=ackRes+1 )/Raw(load="holaMundo")
     resp = sr1(packet, timeout = 0.1)
     if resp:
         if resp[TCP].flags == "A":
@@ -20,7 +20,7 @@ def sendPayload(ipDst, port, ackRes):
 
 
 def scanPort(ipDst, port, version):
-    packet = IP(dst= ipDst)/TCP(flags="S", sport = 8080, dport = port)
+    packet = IP(dst= ipDst)/TCP(flags="S", sport = 8080, seq=1, dport = port)
     resp = sr1(packet, timeout = 0.1)
     if resp:
         if resp[TCP].flags == "SA":
