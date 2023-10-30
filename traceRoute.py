@@ -92,10 +92,10 @@ if len(sys.argv) != 2:
 direccionTest = sys.argv[1]
 
 # ejecuto el traceRoute 1 vez
-#traceRoute(direccionTest)
+traceRoute(direccionTest)
 
 # ejecuto el traceRoute 30 veces
-i = 0
-while i < 30:
-    traceRoute(direccionTest)
-    i += 1
+#i = 0
+#while i < 30:
+#    traceRoute(direccionTest)
+#    i += 1
