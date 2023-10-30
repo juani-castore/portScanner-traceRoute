@@ -14,3 +14,5 @@ outlook.office365.com,-h,0.8,99.2,0.0
 outlook.office365.com,-f,0.0,99.2,0.8
 smtp.mail.yahoo.com,-h,0.0,100.0,0.0
 smtp.mail.yahoo.com,-f,0.0,100.0,0.0
+google.com,-h,0.2,99.8,0.0
+google.com,-f,0.0,99.8,0.2
